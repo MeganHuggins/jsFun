@@ -165,11 +165,13 @@ const cakePrompts = {
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.map(cake => {
+      const cakeStuff = {};
+      cakeStuff.flavor = cake.cakeFlavor;
+      cakeStuff.inStock = cake.inStock;
+      return cakeStuff;
+    });
     return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
   },
 
   onlyInStock() {
@@ -216,11 +218,14 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = CAKES.REDUCE((acc, cake) => {
+      cake.toppings.forEach(topping => {
+        if(!acc.includes(toppings))
+          acc.push(topping);        
+      });
+      return acc;
+    }, []);
     return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
   },
 
   groceryList() {
