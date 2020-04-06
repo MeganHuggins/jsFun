@@ -24,16 +24,13 @@ const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
 // DATASET: kitties from ./datasets/kitties
 const kittyPrompts = {
   orangeKittyNames() {
-
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
+
     const result = kitties
       .filter(kitty => kitty.color === 'orange')
       .map(kitty => kitty.name)
     return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
   },
 
   sortByAge() {
@@ -43,9 +40,6 @@ const kittyPrompts = {
       return b.age - a.age;
     });
     return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
   },
 
   growUp() {
@@ -195,22 +189,17 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
 
-    // Annotation:
-    // Write your annotation here as a comment
+
   },
 
   totalInventory() {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
+    const result = cakes.reduce((acc, cake) => {
+      return acc += cake.inStock;
+    }, 0)
   },
 
   allToppings() {
@@ -218,10 +207,10 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = CAKES.REDUCE((acc, cake) => {
+    const result = cakes.reduce((acc, cake) => {
       cake.toppings.forEach(topping => {
         if(!acc.includes(toppings))
-          acc.push(topping);        
+          acc.push(topping);
       });
       return acc;
     }, []);
@@ -239,11 +228,18 @@ const cakePrompts = {
     //    ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const result = cakes.reduce((acc, cake) => {
+      cake.toppings.forEach(topping => {
+        if(!acc[topping]){
+          acc[topping] = 1;
+        } else {
+          acc[topping]++;
+        }
+      })
+      return acc;
+    }, {});
 
-    // Annotation:
-    // Write your annotation here as a comment
+    return result;
   }
 };
 
@@ -274,11 +270,9 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const result = classrooms.filter(classroom => classroom.program === 'FE');
 
-    // Annotation:
-    // Write your annotation here as a comment
+    return result;
   },
 
   totalCapacities() {
@@ -289,21 +283,24 @@ const classPrompts = {
     //   beCapacity: 96
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const result = classrooms.reduce((acc, classroom) => {
+      let myCoolKey = classroom.program === 'FE' ? 'feCapacity' : 'beCapacity';
+      if (!acc[myCoolKey]) {
+        acc[myCoolKey] = classroom.capacity
+      } else {
+        acc[myCoolKey] += classroom.capacity
+      }
+      return acc
+    }, {});
 
-    // Annotation:
-    // Write your annotation here as a comment
+    return result;
   },
 
   sortByCapacity() {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
+    const result = classrooms.sort((a, b) => a.capacity - b.capacity);
+    return result ;
   }
 };
 
@@ -364,8 +361,12 @@ const weatherPrompts = {
     // return an array of all the average temperatures. Eg:
     // [ 40, 40, 44.5, 43.5, 57, 35, 65.5, 62, 14, 46.5 ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const result = weather.map(item => {
+    return (item.temperature.high + item.temperature.low)/2;
+    });
+
+    retrun result;
+
 
     // Annotation:
     // Write your annotation here as a comment
@@ -378,7 +379,13 @@ const weatherPrompts = {
     // 'New Orleans, Louisiana is sunny.',
     // 'Raleigh, North Carolina is mostly sunny.' ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = weather.reduce((acc, item) => {
+      if(item.type === 'sunny' || item.type == 'mostly sunny') {
+        acc.push(`${item.location} is ${item.type}`)
+      }
+      return acc;
+    }, []);
+
     return result;
 
     // Annotation:
