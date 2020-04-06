@@ -189,8 +189,8 @@ const cakePrompts = {
     // ..etc
     // ]
 
-
-
+    const result = cakes.filter(cake => cake.inStock > 0);
+    return result;
   },
 
   totalInventory() {
@@ -200,6 +200,7 @@ const cakePrompts = {
     const result = cakes.reduce((acc, cake) => {
       return acc += cake.inStock;
     }, 0)
+    return result;
   },
 
   allToppings() {
@@ -209,7 +210,7 @@ const cakePrompts = {
 
     const result = cakes.reduce((acc, cake) => {
       cake.toppings.forEach(topping => {
-        if(!acc.includes(toppings))
+        if(!acc.includes(topping))
           acc.push(topping);
       });
       return acc;
@@ -322,13 +323,14 @@ const bookPrompts = {
     //   'The Curious Incident of the Dog in the Night - Time', 'The Bell Jar',
     //   'Catch-22', 'Treasure Island']
 
+     const result = books.reduce((acc, book) => {
+       if (book.genre !== 'Horror' && book.genre !== 'True Crime') {
+         acc.push(book.title);
+       }
+       return acc;
+     }, []);
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
-
+     return result;
   },
   getNewBooks() {
     // return an array of objects containing all books that were
@@ -338,13 +340,15 @@ const bookPrompts = {
     //  { title: 'Life of Pi', year: 2001 },
     //  { title: 'The Curious Incident of the Dog in the Night-Time', year: 2003 }]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = books.reduce((acc, book) => {
+      if(book.published >= 1990) {
+        acc.push({title: book.title, year: book.published});
+      }
+      return acc;
+    }, [])
+
     return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
   }
-
 };
 
 
@@ -365,7 +369,7 @@ const weatherPrompts = {
     return (item.temperature.high + item.temperature.low)/2;
     });
 
-    retrun result;
+    return result;
 
 
     // Annotation:
@@ -381,7 +385,7 @@ const weatherPrompts = {
 
     const result = weather.reduce((acc, item) => {
       if(item.type === 'sunny' || item.type == 'mostly sunny') {
-        acc.push(`${item.location} is ${item.type}`)
+        acc.push(`${item.location} is ${item.type}.`)
       }
       return acc;
     }, []);
@@ -400,13 +404,8 @@ const weatherPrompts = {
     //   humidity: 84,
     //   temperature: { high: 49, low: 38 }
     // }
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
-
+    const result = weather.sort((a, b) => b.humidity - a.humidity);
+    return result[0];
   }
 };
 
