@@ -29,7 +29,7 @@ const kittyPrompts = {
 
     const result = kitties
       .filter(kitty => kitty.color === 'orange')
-      .map(kitty => kitty.name)
+      .map(kitty => kitty.name);
     return result;
   },
 
@@ -427,11 +427,17 @@ const nationalParksPrompts = {
     //   parksVisited: ["Rocky Mountain", "Acadia", "Zion"]
     //}
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const result = nationalParks.reduce((acc, park) => {
+      let newKey = park.visited === true ? 'parksVisited' : 'parksToVisit';
+      if(!acc[newKey]){
+        acc[newKey] = [park.name]
+      } else {
+        acc[newKey].push(park.name)
+      }
+      return acc
+    }, {});
 
-    // Annotation:
-    // Write your annotation here as a comment
+    return result;
   },
 
   getParkInEachState() {
@@ -443,12 +449,14 @@ const nationalParksPrompts = {
     // { Utah: 'Zion' },
     // { Florida: 'Everglades' } ]
 
+    const result = nationalParks.reduce((acc, park) => {
+      const temp = {};
+      temp[park.location] = park.name;
+      acc.push(temp);
+      return acc;
+    }, []);
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
     return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
   },
 
   getParkActivities() {
@@ -467,11 +475,16 @@ const nationalParksPrompts = {
     //   'backpacking',
     //   'rock climbing' ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const result = nationalParks.reduce((acc, park) => {
+      park.activities.forEach(activity => {
+        if(!acc.includes(activity)){
+          acc.push(activity)
+        }
+      });
+      return acc;
+    }, []);
 
-    // Annotation:
-    // Write your annotation here as a comment
+    return result;
   }
 };
 
